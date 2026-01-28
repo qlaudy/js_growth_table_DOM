@@ -9,10 +9,26 @@ const buttonRemoveRow = document.querySelector('.remove-row');
 const buttonAppendColumn = document.querySelector('.append-column');
 const buttonRemoveColumn = document.querySelector('.remove-column');
 
+function updateButtons() {
+  const rowsCount = tbody.children.length;
+  const columnsCount = tbody.firstElementChild.children.length;
+
+  buttonAppendRow.disabled = rowsCount >= 10;
+  buttonRemoveRow.disabled = rowsCount <= 2;
+
+  buttonAppendColumn.disabled = columnsCount >= 10;
+  buttonRemoveColumn.disabled = columnsCount <= 2;
+}
+
+
 buttonAppendRow.addEventListener('click', (events) => {
   const tr = document.createElement('tr');
 
   const children = tbody.firstElementChild;
+
+  if (tbody.firstElementChild.children.length >= 10) {
+    return;
+  }
 
   for (let i = 0; i < children.children.length; i++) {
     const td = document.createElement('td');
@@ -21,6 +37,8 @@ buttonAppendRow.addEventListener('click', (events) => {
   }
 
   tbody.append(tr);
+
+  updateButtons();
 });
 
 buttonRemoveRow.addEventListener('click', (events) => {
@@ -29,6 +47,8 @@ buttonRemoveRow.addEventListener('click', (events) => {
   if (tbody.children.length > 2) {
     tbody.removeChild(tbodyClean);
   }
+
+  updateButtons();
 });
 
 buttonAppendColumn.addEventListener('click', (events) => {
@@ -43,6 +63,8 @@ buttonAppendColumn.addEventListener('click', (events) => {
 
     fullTr[i].append(newTd);
   }
+
+  updateButtons();
 });
 
 buttonRemoveColumn.addEventListener('click', (events) => {
@@ -57,4 +79,6 @@ buttonRemoveColumn.addEventListener('click', (events) => {
 
     last.remove();
   }
+
+  updateButtons();
 });
