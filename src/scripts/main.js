@@ -20,13 +20,12 @@ function updateButtons() {
   buttonRemoveColumn.disabled = columnsCount <= 2;
 }
 
-
 buttonAppendRow.addEventListener('click', (events) => {
   const tr = document.createElement('tr');
 
   const children = tbody.firstElementChild;
 
-  if (tbody.firstElementChild.children.length >= 10) {
+  if (tbody.children.length >= 10) {
     return;
   }
 
